@@ -4,6 +4,7 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ void inc(C& c, int n){
 
 template<typename Iter1, typename Iter2>
 // requires Input_iterator<Iter1>() && Output_iterator<Iter2>()
-Iter2 copy(Iter1 f1, Iter1 e1, Iter2 f2){
+Iter2 orai_copy(Iter1 f1, Iter1 e1, Iter2 f2){
 	for(Iter1 p = f1; p!= e1; ++p){
 		*f2++=*p;
 	}
@@ -63,14 +64,24 @@ try {
 	print(vi2);
 	print(li2);
 
-	copy(ai2.begin(), ai2.end(), vi2.begin());
-	copy(li2.begin(), li2.end(), ai2.begin());
+	orai_copy(ai2.begin(), ai2.end(), vi2.begin());
+	orai_copy(li2.begin(), li2.end(), ai2.begin());
 
 	print(ai2);
 	print(vi2);
 	print(li2);
 
-	std::find(ai2.begin(), ai2.end(), 3);
+	//iterátor, mely inteket tartalmazó vektor egyik elemére mutat
+	std::vector<int>::iterator vit;
+	vit = std::find(vi2.begin(), vi2.end(), 3);
+
+	if(vit != vi2.end()){
+		std::cout << "Found at: " << std::distance(vi2.begin(), vit) << std::endl;
+	} else {
+		std::cout << "Not found" << std::endl;
+	}
+
+
 
 }
 catch(std::exception& e){
